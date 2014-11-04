@@ -3,6 +3,8 @@
         "psr-0": { "": "src/" }
     },
     "require":  {
-		"kriswallsmith/buzz": "dev-master"
+		"kriswallsmith/buzz": "dev-master",
+		"symfony/stopwatch":  "dev-master",
+		"symfony/filesystem": "dev-master"
     }
 }
