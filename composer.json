@@ -5,6 +5,8 @@
     "require":  {
 		"kriswallsmith/buzz": "dev-master",
 		"symfony/stopwatch":  "dev-master",
-		"symfony/filesystem": "dev-master"
+		"symfony/filesystem": "dev-master",
+		"silex/silex": "~1.1",
+		"twig/twig": ">=1.8,<2.0-dev"
     }
 }

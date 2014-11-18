@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>Hello World Twig</title>
+	</head>
+	<body>
+		<nav>
+			<ul>
+				<li>About</li>
+				<li>Policy</li>
+			</ul>
+		</nav>
+		<section>
+			{% block content %}
+			{% endblock %}
+		</section>
+		<footer>
+			{% block footer %}
+				basic footer
+			{% endblock %}
+		</footer>
+	</body>
+</html>

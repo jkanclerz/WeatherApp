@@ -3,20 +3,36 @@
 
 include_once(__DIR__.'/../vendor/autoload.php');
 
-use Buzz\Browser;
-use Jkanclerz\Component\Weather\Api\OpenWeatherClient;
-use Symfony\Component\Stopwatch\Stopwatch;
-use Symfony\Component\Filesystem\Filesystem;
+define('SRC', dirname(__DIR__).'/src');
 
-$cacheFile = __DIR__.'/cache/weatcher.cache';
-$browser = new Browser();
-$fs = new Filesystem();
-$stopWatch = new Stopwatch();
-$apiClient = new OpenWeatherClient($browser, $fs, $cacheFile, $stopWatch);
+use Silex\Application;
+use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\ServiceControllerServiceProvider;
+use Jkanclerz\Application\Controller\OverviewController;
 
-$resp = json_decode($apiClient->callApi('Cracow'), true);
-var_dump($resp['main']['temp']);
+$app = new Application();
 
-$event = $stopWatch->getEvent('callApi');
-var_dump($event->getDuration());
-die;
+$app['debug'] = true;
+
+$app->register(
+	new TwigServiceProvider(),
+	array(
+		'twig.path' => SRC.'/Jkanclerz/Application/Resources/views'
+	)
+);
+
+$app->register(
+	new ServiceControllerServiceProvider()
+);
+
+$app['jkan.controller.overview'] = $app->share(
+	function() use ($app) {
+		return new OverviewController(
+			$app['twig']
+		);
+	}
+);
+
+$app->get('/', 'jkan.controller.overview:indexAction');
+
+$app->run();
